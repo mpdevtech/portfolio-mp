@@ -1,122 +1,57 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useEffect, useState } from 'react'
+import type { MouseEvent } from 'react'
+import { Footer, Header, Button } from './components/Layout'
+import { projects } from './data/projects'
+import Home from './pages/Home'
+import Project from './pages/Project'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+// Two routes, with native links and browser back/forward support.
+export default function App() {
+  const [location, setLocation] = useState(() => window.location.pathname + window.location.hash)
+  const pathname = location.split('#')[0].replace(/\/$/, '') || '/'
+  const project = projects.find(item => pathname === `/projetos/${item.slug}`)
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+  useEffect(() => {
+    const updateLocation = () => setLocation(window.location.pathname + window.location.hash)
+    window.addEventListener('popstate', updateLocation)
+    window.addEventListener('hashchange', updateLocation)
+    return () => {
+      window.removeEventListener('popstate', updateLocation)
+      window.removeEventListener('hashchange', updateLocation)
+    }
+  }, [])
 
-      <div className="ticks"></div>
+  useEffect(() => {
+    document.title = project ? `${project.title} — Marcos Paulo` : pathname === '/' ? 'Marcos Paulo — Designer Gráfico' : 'Página não encontrada — Marcos Paulo'
+    const hash = location.split('#')[1]
+    const frame = requestAnimationFrame(() => {
+      if (hash) document.getElementById(hash)?.scrollIntoView()
+      else window.scrollTo({ top: 0, behavior: 'instant' })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [location, pathname, project])
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+  function navigate(event: MouseEvent<HTMLDivElement>) {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    const link = (event.target as Element).closest<HTMLAnchorElement>('a[href]')
+    if (!link || link.target || link.hasAttribute('download')) return
+    const url = new URL(link.href)
+    if (url.origin !== window.location.origin || url.pathname === window.location.pathname) return
+    event.preventDefault()
+    window.history.pushState(null, '', url.pathname + url.hash)
+    setLocation(url.pathname + url.hash)
+    document.getElementById('main-content')?.focus({ preventScroll: true })
+  }
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+  return <div onClick={navigate}>
+    <a className="skip-link" href="#main-content">Pular para o conteúdo</a>
+    <Header />
+    <main id="main-content" tabIndex={-1}>
+      {pathname === '/' ? <Home /> : project ? <Project project={project} /> : (
+        <section className="not-found container"><h1>Página não encontrada.</h1><p>Este projeto não está disponível.</p><Button href="/#trabalhos">Voltar aos trabalhos</Button></section>
+      )}
+    </main>
+    <Footer />
+  </div>
 }
-
-export default App

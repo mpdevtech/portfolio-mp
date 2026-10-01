@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# Portfólio — Marcos Paulo
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Implementação em React + TypeScript + Vite dos frames Home (`7:2126`) e Projeto (`7:2506`) do [Figma](https://www.figma.com/design/lZAtEZX5Sy4bIt6YAgFOdS/Sem-t%C3%ADtulo). CSS puro, sem novas dependências.
 
-Currently, two official plugins are available:
+## Executar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Abra o endereço informado pelo Vite (normalmente http://localhost:5173).
+
+```sh
+npm run build   # TypeScript + build de produção em dist/
+npm run lint    # Oxlint
+npm run preview
+```
+
+## Organização
+
+- `src/components/`: Hero, About, Contact, ProjectGrid/ProjectCard, ProjectGallery, ProjectMedia e elementos compartilhados em Layout (Header, Footer, Button, Eyebrow, Arrow).
+- `src/pages/Home.tsx`: composição da página principal.
+- `src/pages/Project.tsx`: template único para todos os projetos.
+- `src/data/projects.ts`: slugs, títulos, categorias, anos, descrições, capas, galeria e mockups.
+- `src/data/contact.ts`: WhatsApp, Instagram e e-mail.
+- `src/index.css`: fontes locais, tokens e estilos globais.
+- `src/App.css`: layout, componentes, interações e responsividade.
+- `src/App.tsx`: navegação com History API, sem biblioteca adicional.
+- `public/images/`: fotografias e composições originais exportadas pelo Figma MCP.
+- `public/fonts/`: Inter e Space Grotesk com licenças OFL.
+
+## Editar projetos
+
+Cada card aponta para `/projetos/<slug>`. Altere os objetos em `src/data/projects.ts`. Cada projeto aceita uma capa independente, imagem principal, imagens da galeria, aplicação principal e mockups. Os seis projetos compartilham inicialmente o conteúdo de referência do template do Figma; sobrescreva os campos **depois de `...template`** para personalizá-los.
+
+Os arquivos exportados são apenas as composições visuais dos trabalhos. Textos, legendas, links e toda a estrutura da página são HTML/CSS, não capturas de tela.
+
+O Figma disponibiliza fotografias reais do Marcos e placeholders para os trabalhos. As capas e o template foram preservados, inclusive as notas de conteúdo editável. Faltam os nomes, anos, descrições e imagens definitivos dos cases. Não há carrossel visível no frame; foi mantida a galeria estática assimétrica. A versão mobile adapta a composição desktop, pois o arquivo não contém frames mobile.
+
+## Navegação e publicação
+
+Há rotas `/`, `/projetos/projeto-01` até `/projetos/projeto-06`, âncoras da Home e uma tela para rotas desconhecidas. A navegação anterior/próximo percorre os seis projetos de forma circular. Links preservam abertura em nova aba e o histórico do navegador.
+
+Ao publicar, configure o servidor para servir `index.html` nas rotas de aplicação que não correspondem a arquivos. Isso permite abrir/recarregar diretamente `/projetos/projeto-01`. O Vite já oferece esse fallback localmente. Imagens e fontes usam caminhos a partir da raiz; publique na raiz do domínio.
+
+## Validação
+
+Build TypeScript/Vite, lint e integridade dos assets locais verificados. A comparação das medidas foi feita com o contexto e as capturas do Figma. A inspeção visual da aplicação no navegador e a interação em dispositivos reais ainda precisam ser realizadas: o ambiente não disponibilizou navegador conectado nem permissão para controlar o Safari.
