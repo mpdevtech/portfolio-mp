@@ -1,4 +1,9 @@
 .container { width: 100%; max-width: 1440px; margin-inline: auto; padding-inline: var(--page-gutter); }
+/* Let grid and flex content shrink to the available viewport width. */
+.work-intro > *, .about-inner > *, .case-info > *,
+.project-card-info > div, .project-navigation a, .project-navigation a > span { min-width: 0; }
+.project-card h3, .project-card-info p, .about-copy, .case-info dd,
+.contact-link, .project-navigation-title { overflow-wrap: anywhere; }
 .site-header { height: 104px; display: flex; align-items: center; justify-content: space-between; }
 .brand { font: 700 23px/1.28 var(--font-heading); letter-spacing: -.7px; }
 .site-header nav { display: flex; gap: 40px; font-size: 14px; }
@@ -153,9 +158,9 @@ a.contact-link:hover { color: var(--color-primary); border-color: var(--color-pr
   .hero-art::after { left: 0; width: 100%; top: auto; bottom: -1px; height: 180px; background: linear-gradient(transparent, var(--color-bg) 88%); }
   .hero-base { position: static; width: 100%; order: 2; gap: 20px; margin-top: 24px; }
   .work-section { padding-block: 72px; }
-  .work-intro { display: grid; gap: 24px; }
-  .work-description { width: 550px; }
-  .about-inner { grid-template-columns: 1fr; gap: 48px; padding-block: 72px; }
+  .work-intro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .work-description { width: min(550px, 100%); }
+  .about-inner { grid-template-columns: minmax(0, 1fr); gap: 48px; padding-block: 72px; }
   .about-portrait { width: min(100%, 536px); }
   .about-copy { max-width: 640px; }
   .about-copy h2 { font-size: 54px; }
@@ -163,7 +168,7 @@ a.contact-link:hover { color: var(--color-primary); border-color: var(--color-pr
   .contact-invitation { align-items: flex-start; flex-direction: column; gap: 28px; }
   .contact-invitation p { width: min(100%, 400px); }
   .contact-link { font-size: 22px; }
-  .case-info { grid-template-columns: 1fr 1fr; }
+  .case-info { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .case-info > div:last-child { grid-column: 1 / -1; }
   .case-intro h1 { font-size: 72px; letter-spacing: -3px; }
   .gallery-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
@@ -189,7 +194,7 @@ a.contact-link:hover { color: var(--color-primary); border-color: var(--color-pr
   .hero-base { align-items: flex-start; flex-direction: column; gap: 16px; }
   .hero-base p { font-size: 10px; }
   .section-title h2 { font-size: clamp(34px, 10.8vw, 44px); letter-spacing: -2px; }
-  .project-grid { grid-template-columns: 1fr; gap: 36px; }
+  .project-grid { grid-template-columns: minmax(0, 1fr); gap: 36px; }
   .project-card h3 { font-size: 23px; }
   .project-card-info { padding-top: 16px; }
   .about-inner { gap: 40px; }
@@ -210,7 +215,8 @@ a.contact-link:hover { color: var(--color-primary); border-color: var(--color-pr
   .project-media figcaption { padding-inline: 12px; font-size: 10px; }
   .project-media figcaption > span:last-child:not(:first-child) { font-size: 8px; }
   .project-navigation-inner { gap: 20px; padding-block: 40px; }
-  .project-navigation a { gap: 8px; }
+  .project-navigation a { flex: 1; gap: 8px; }
+  .project-navigation a:last-child { justify-content: flex-end; }
   .project-navigation .arrow { width: 24px; height: 24px; }
   .project-navigation-title { font-size: 20px; letter-spacing: -.6px; }
   .project-navigation-label { font-size: 10px; margin-bottom: 8px; }
