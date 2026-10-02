@@ -13,13 +13,13 @@ export default function Project({ project }: { project: ProjectData }) {
     <section className="case-opening container" aria-labelledby="case-title">
       <a className="back-link" href={withBase('/#trabalhos')}><Arrow name="back" />Voltar aos trabalhos</a>
       <div className="case-intro">
-        <Eyebrow>Template de projeto • Conteúdo editável</Eyebrow>
+        <Eyebrow>{project.mainImage.placeholder ? 'Template de projeto • Conteúdo editável' : project.category}</Eyebrow>
         <h1 id="case-title">{project.title}</h1>
         <dl className="case-info">
           <div><dt>Categoria</dt><dd>{project.category}</dd></div><div><dt>Ano</dt><dd>{project.year}</dd></div><div><dt>Sobre o projeto</dt><dd>{project.description}</dd></div>
         </dl>
       </div>
-      <ProjectMedia image={project.mainImage} className="case-main" eager />
+      <ProjectMedia showCaption={false} image={project.mainImage} className="case-main" eager />
     </section>
     <ProjectGallery project={project} />
     <nav className="project-navigation" aria-label="Navegação entre projetos"><div className="container project-navigation-inner">

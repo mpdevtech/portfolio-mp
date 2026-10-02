@@ -22,7 +22,7 @@ export default function ProjectGrid() {
       <div className="section-title"><Eyebrow>Seleção de projetos</Eyebrow><h2 id="work-title">Meus trabalhos</h2></div>
       <div className="work-description">
         <p>Identidade visual, design gráfico, campanhas e comunicação visual. Ideias que ganham forma, do impresso aos projetos digitais.</p>
-        <p className="editorial-note">As imagens abaixo são placeholders para seus projetos.</p>
+        <p className="editorial-note">Seleção em atualização: alguns projetos ainda possuem imagens demonstrativas.</p>
       </div>
     </div>
     <div className="project-grid">{projects.map(project => <ProjectCard key={project.slug} project={project} />)}</div>

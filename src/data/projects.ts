@@ -19,7 +19,7 @@ export type Project = {
   mockups: ProjectImage[]
 }
 
-// As seis capas e o case são referências do Figma, ainda sem conteúdo final.
+// Imagens demonstrativas dos projetos que ainda aguardam conteúdo final.
 const image = (file: string, alt: string, caption: string, tone: ProjectImage['tone'] = 'dark'): ProjectImage => ({
   src: `/images/${file}`, alt, caption, tone, placeholder: true,
 })
@@ -39,8 +39,42 @@ const template = {
   ],
 }
 
+// URLs estáticas permitem ao Vite versionar e publicar as imagens na base do site.
+const pedroLucasImages = [
+  new URL('../assets/projects/projeto-01/01.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/02.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/03.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/04.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/05.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/06.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/07.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/08.jpg', import.meta.url).href,
+  new URL('../assets/projects/projeto-01/09.jpg', import.meta.url).href,
+].map((src, index): ProjectImage => ({
+  src,
+  alt: `Pedro Lucas — identidade visual, prancha ${String(index + 1).padStart(2, '0')}.`,
+  caption: `Pedro Lucas · ${String(index + 1).padStart(2, '0')}`,
+  tone: 'dark',
+}))
+
 export const projects: Project[] = [
-  { slug: 'projeto-01', title: 'Projeto 01', category: 'Identidade visual', cover: image('cover-identidade.svg', 'Anel laranja com pequeno detalhe azul escuro.', 'Capa substituível'), ...template },
+  {
+    slug: 'projeto-01',
+    title: 'Pedro Lucas',
+    category: 'Identidade visual',
+    year: '2024',
+    description: 'A marca surgiu com a missão de ajudar as pessoas a atingirem o seu máximo potencial físico através de um treinamento de força seguro e fundamentado na ciência.',
+    cover: {
+      src: new URL('../assets/projects/projeto-01/cover.jpg', import.meta.url).href,
+      alt: 'Capa do projeto de identidade visual Pedro Lucas.',
+      caption: 'Pedro Lucas · Identidade visual',
+      tone: 'dark',
+    },
+    mainImage: pedroLucasImages[0],
+    images: pedroLucasImages.slice(1, 4),
+    applications: pedroLucasImages[4],
+    mockups: pedroLucasImages.slice(5),
+  },
   { slug: 'projeto-02', title: 'Projeto 02', category: 'Design gráfico · Editorial', cover: image('cover-editorial.png', 'Folhas de papel sobrepostas em composição editorial.', 'Capa substituível', 'paper'), ...template },
   { slug: 'projeto-03', title: 'Projeto 03', category: 'Campanha', cover: image('cover-campanha.png', 'Pôster laranja com círculo escuro.', 'Capa substituível', 'warm'), ...template },
   { slug: 'projeto-04', title: 'Projeto 04', category: 'Comunicação visual', cover: image('cover-tipografia.png', 'Letras Aa com sublinhado laranja.', 'Capa substituível'), ...template },
