@@ -1,3 +1,4 @@
+import { withBase, routePath } from './paths'
 import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { Footer, Header, Button } from './components/Layout'
@@ -9,7 +10,7 @@ import './App.css'
 // Two routes, with native links and browser back/forward support.
 export default function App() {
   const [location, setLocation] = useState(() => window.location.pathname + window.location.hash)
-  const pathname = location.split('#')[0].replace(/\/$/, '') || '/'
+  const pathname = routePath(location.split('#')[0])
   const project = projects.find(item => pathname === `/projetos/${item.slug}`)
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function App() {
     <Header />
     <main id="main-content" tabIndex={-1}>
       {pathname === '/' ? <Home /> : project ? <Project project={project} /> : (
-        <section className="not-found container"><h1>Página não encontrada.</h1><p>Este projeto não está disponível.</p><Button href="/#trabalhos">Voltar aos trabalhos</Button></section>
+        <section className="not-found container"><h1>Página não encontrada.</h1><p>Este projeto não está disponível.</p><Button href={withBase('/#trabalhos')}>Voltar aos trabalhos</Button></section>
       )}
     </main>
     <Footer />

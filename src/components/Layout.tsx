@@ -1,15 +1,16 @@
+import { withBase } from '../paths'
 import type { ReactNode } from 'react'
 
 const currentYear = new Date().getFullYear()
 
 export function Arrow({ name = 'card' }: { name?: 'card' | 'button' | 'contact' | 'back' | 'previous' | 'next' }) {
-  return <img className={`arrow arrow--${name}`} src={`/images/arrow-${name}.svg`} alt="" aria-hidden="true" />
+  return <img className={`arrow arrow--${name}`} src={withBase(`/images/arrow-${name}.svg`)} alt="" aria-hidden="true" />
 }
 
 export function Header() {
   return <header className="site-header container">
-    <a className="brand" href="/">Marcos Paulo</a>
-    <nav aria-label="Navegação principal"><a href="/#trabalhos">Trabalhos</a><a href="/#sobre">Sobre</a><a href="/#contato">Contato</a></nav>
+    <a className="brand" href={withBase('/')}>Marcos Paulo</a>
+    <nav aria-label="Navegação principal"><a href={withBase('/#trabalhos')}>Trabalhos</a><a href={withBase('/#sobre')}>Sobre</a><a href={withBase('/#contato')}>Contato</a></nav>
   </header>
 }
 

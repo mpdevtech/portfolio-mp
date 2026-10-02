@@ -1,10 +1,11 @@
+import { withBase } from '../paths'
 import { Eyebrow } from './Layout'
 
 export default function About() {
   return <section id="sobre" className="about-section" aria-labelledby="about-title">
     <div className="about-inner container">
       <figure className="about-portrait">
-        <div className="about-photo-frame"><div className="about-photo-crop"><img src="/images/marcos-about.png" alt="Retrato de Marcos Paulo usando camisa azul escura." loading="lazy" /></div></div>
+        <div className="about-photo-frame"><div className="about-photo-crop"><img src={withBase('/images/marcos-about.png')} alt="Retrato de Marcos Paulo usando camisa azul escura." loading="lazy" /></div></div>
         <figcaption>Marcos Paulo / Designer Gráfico</figcaption>
       </figure>
       <div className="about-copy">

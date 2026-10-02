@@ -42,7 +42,17 @@ O Figma disponibiliza fotografias reais do Marcos e placeholders para os trabalh
 
 Há rotas `/`, `/projetos/projeto-01` até `/projetos/projeto-06`, âncoras da Home e uma tela para rotas desconhecidas. A navegação anterior/próximo percorre os seis projetos de forma circular. Links preservam abertura em nova aba e o histórico do navegador.
 
-Ao publicar, configure o servidor para servir `index.html` nas rotas de aplicação que não correspondem a arquivos. Isso permite abrir/recarregar diretamente `/projetos/projeto-01`. O Vite já oferece esse fallback localmente. Imagens e fontes usam caminhos a partir da raiz; publique na raiz do domínio.
+O projeto está configurado para https://mpdevtech.github.io/portfolio-mp/, com `base: '/portfolio-mp/'` no Vite. Links e imagens usam essa base; fontes e preloads são ajustados pelo Vite. O build gera um `index.html` para cada projeto cadastrado e um `404.html`, permitindo abrir e recarregar os cases diretamente no GitHub Pages sem regras de servidor.
+
+### Deploy pelo GitHub Actions
+
+1. No repositório, acesse **Settings → Pages → Build and deployment → Source** e selecione **GitHub Actions**.
+2. Envie estas alterações para a branch `main`.
+3. Acompanhe o workflow **Deploy to GitHub Pages** na aba **Actions**.
+
+O workflow `.github/workflows/deploy.yml` executa a cada push na `main` (incluindo merges) e também pode ser iniciado por **Run workflow**. Usa Node.js 24, instala dependências com `npm ci`, executa lint e build e publica `dist/` com as actions oficiais do Pages. Não é necessário criar uma branch `gh-pages` nem cadastrar token pessoal.
+
+Para testar o build localmente, execute `npm run build` e `npm run preview`, acessando `/portfolio-mp/` no endereço informado. Novos projetos cadastrados em `src/data/projects.ts` recebem suas páginas de entrada automaticamente no próximo build.
 
 ## Validação
 

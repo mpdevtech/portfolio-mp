@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { projects } from '../data/projects'
 import type { Project } from '../data/projects'
 import { Arrow, Eyebrow } from './Layout'
@@ -5,7 +6,7 @@ import ProjectMedia from './ProjectMedia'
 
 export function ProjectCard({ project }: { project: Project }) {
   return <article className="project-card">
-    <a href={`/projetos/${project.slug}`} aria-label={`Ver ${project.title} — ${project.category}`}>
+    <a href={withBase(`/projetos/${project.slug}`)} aria-label={`Ver ${project.title} — ${project.category}`}>
       <ProjectMedia image={project.cover} className="project-cover" />
       <div className="project-card-info">
         <div><h3>{project.title}</h3><p>{project.category}</p></div>
