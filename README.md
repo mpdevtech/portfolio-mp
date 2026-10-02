@@ -1,59 +1,110 @@
 # Portfólio — Marcos Paulo
 
-Implementação em React + TypeScript + Vite dos frames Home (`7:2126`) e Projeto (`7:2506`) do [Figma](https://www.figma.com/design/lZAtEZX5Sy4bIt6YAgFOdS/Sem-t%C3%ADtulo). CSS puro, sem novas dependências.
+Portfólio de Marcos Paulo, designer gráfico, dedicado à apresentação de trabalhos de identidade visual, design gráfico, campanhas e experiências digitais. O site reúne uma seleção de projetos, informações sobre o profissional e canais de contato em uma interface responsiva.
 
-## Executar
+**Endereço de publicação:** [mpdevtech.github.io/portfolio-mp](https://mpdevtech.github.io/portfolio-mp/)
+
+## Funcionalidades
+
+- Página inicial com apresentação, trabalhos em destaque, seção sobre e contato.
+- Página individual para cada projeto, com descrição, galeria de imagens, aplicações e mockups.
+- Navegação entre projetos anteriores e próximos, com suporte ao histórico do navegador.
+- Layout adaptado para desktop e dispositivos móveis.
+- Fontes hospedadas localmente e carregamento sob demanda das imagens de galeria.
+- Publicação automatizada no GitHub Pages pelo GitHub Actions.
+
+## Tecnologias
+
+- **React 19** e **TypeScript** para a interface e organização do código.
+- **Vite** para desenvolvimento local e build de produção.
+- **CSS** para estilos, responsividade e identidade visual.
+- **Oxlint** para análise estática do código.
+- **GitHub Actions** e **GitHub Pages** para build e hospedagem.
+
+## Executar localmente
+
+Utilize **Node.js 24**, a mesma versão configurada no CI, e **npm**.
 
 ```sh
-npm install
+git clone https://github.com/mpdevtech/portfolio-mp.git
+cd portfolio-mp
+npm ci
 npm run dev
 ```
 
-Abra o endereço informado pelo Vite (normalmente http://localhost:5173).
+Acesse o endereço exibido pelo Vite, normalmente `http://localhost:5173/portfolio-mp/`.
+
+### Comandos disponíveis
+
+- `npm run dev`: inicia o servidor de desenvolvimento.
+- `npm run lint`: verifica o código com Oxlint.
+- `npm run build`: verifica os tipos com TypeScript e gera o site em `dist/`.
+- `npm run preview`: serve o build de produção localmente para conferência.
+
+Para conferir a versão de produção:
 
 ```sh
-npm run build   # TypeScript + build de produção em dist/
-npm run lint    # Oxlint
+npm run lint
+npm run build
 npm run preview
 ```
 
-## Organização
+Abra o endereço informado pelo preview com o caminho `/portfolio-mp/`.
 
-- `src/components/`: Hero, About, Contact, ProjectGrid/ProjectCard, ProjectGallery, ProjectMedia e elementos compartilhados em Layout (Header, Footer, Button, Eyebrow, Arrow).
-- `src/pages/Home.tsx`: composição da página principal.
-- `src/pages/Project.tsx`: template único para todos os projetos.
-- `src/data/projects.ts`: slugs, títulos, categorias, anos, descrições, capas, galeria e mockups.
-- `src/data/contact.ts`: WhatsApp, Instagram e e-mail.
-- `src/index.css`: fontes locais, tokens e estilos globais.
-- `src/App.css`: layout, componentes, interações e responsividade.
-- `src/App.tsx`: navegação com History API, sem biblioteca adicional.
-- `public/images/`: fotografias e composições originais exportadas pelo Figma MCP.
-- `public/fonts/`: Inter e Space Grotesk com licenças OFL.
+## Estrutura do projeto
 
-## Editar projetos
+```text
+.github/workflows/deploy.yml  Workflow de build e publicação
+public/fonts/                Fontes locais e suas licenças
+public/images/               Fotografias, capas e imagens dos projetos
+src/components/              Componentes da interface
+src/data/                    Conteúdo dos projetos e links de contato
+src/pages/                   Página inicial e página de projeto
+src/App.tsx                  Navegação e composição da aplicação
+src/App.css                  Estilos dos componentes e responsividade
+src/index.css                Fontes, variáveis e estilos globais
+src/paths.ts                 Resolução de caminhos para a base de publicação
+vite.config.ts               Configuração do Vite e páginas de entrada
+```
 
-Cada card aponta para `/projetos/<slug>`. Altere os objetos em `src/data/projects.ts`. Cada projeto aceita uma capa independente, imagem principal, imagens da galeria, aplicação principal e mockups. Os seis projetos compartilham inicialmente o conteúdo de referência do template do Figma; sobrescreva os campos **depois de `...template`** para personalizá-los.
+## Personalizar o conteúdo
 
-Os arquivos exportados são apenas as composições visuais dos trabalhos. Textos, legendas, links e toda a estrutura da página são HTML/CSS, não capturas de tela.
+### Projetos
 
-O Figma disponibiliza fotografias reais do Marcos e placeholders para os trabalhos. As capas e o template foram preservados, inclusive as notas de conteúdo editável. Faltam os nomes, anos, descrições e imagens definitivos dos cases. Não há carrossel visível no frame; foi mantida a galeria estática assimétrica. A versão mobile adapta a composição desktop, pois o arquivo não contém frames mobile.
+Edite [`src/data/projects.ts`](src/data/projects.ts) para adicionar ou alterar os trabalhos. Cada projeto possui um `slug` único, título, categoria, ano, descrição, capa, imagem principal, galeria, aplicações e mockups.
 
-## Navegação e publicação
+Coloque os arquivos em `public/images/` e referencie-os nos dados do projeto. Preencha também os textos alternativos e as legendas das imagens.
 
-Há rotas `/`, `/projetos/projeto-01` até `/projetos/projeto-06`, âncoras da Home e uma tela para rotas desconhecidas. A navegação anterior/próximo percorre os seis projetos de forma circular. Links preservam abertura em nova aba e o histórico do navegador.
+Os projetos atuais incluem conteúdo demonstrativo e placeholders. Substitua-os pelos dados e imagens definitivos. Nos objetos que usam `...template`, declare os campos personalizados **depois dessa expansão**, para que sobrescrevam os valores compartilhados. Remova ou desative `placeholder` nas imagens finalizadas.
 
-O projeto está configurado para https://mpdevtech.github.io/portfolio-mp/, com `base: '/portfolio-mp/'` no Vite. Links e imagens usam essa base; fontes e preloads são ajustados pelo Vite. O build gera um `index.html` para cada projeto cadastrado e um `404.html`, permitindo abrir e recarregar os cases diretamente no GitHub Pages sem regras de servidor.
+### Apresentação e contato
 
-### Deploy pelo GitHub Actions
+- Edite a apresentação nos componentes [`Hero.tsx`](src/components/Hero.tsx) e [`About.tsx`](src/components/About.tsx).
+- Atualize WhatsApp, Instagram e e-mail em [`src/data/contact.ts`](src/data/contact.ts).
+- Ajuste os estilos globais em [`src/index.css`](src/index.css) e os layouts em [`src/App.css`](src/App.css).
+- Atualize o título e a descrição inicial do site em [`index.html`](index.html), além dos títulos de navegação em [`src/App.tsx`](src/App.tsx).
 
-1. No repositório, acesse **Settings → Pages → Build and deployment → Source** e selecione **GitHub Actions**.
-2. Envie estas alterações para a branch `main`.
-3. Acompanhe o workflow **Deploy to GitHub Pages** na aba **Actions**.
+## Deploy no GitHub Pages
 
-O workflow `.github/workflows/deploy.yml` executa a cada push na `main` (incluindo merges) e também pode ser iniciado por **Run workflow**. Usa Node.js 24, instala dependências com `npm ci`, executa lint e build e publica `dist/` com as actions oficiais do Pages. Não é necessário criar uma branch `gh-pages` nem cadastrar token pessoal.
+O [workflow de publicação](.github/workflows/deploy.yml) é executado a cada push na branch `main`, incluindo merges. Ele instala as dependências com `npm ci`, executa lint e build e publica o conteúdo de `dist/`. O deploy depende do sucesso dessas verificações.
 
-Para testar o build localmente, execute `npm run build` e `npm run preview`, acessando `/portfolio-mp/` no endereço informado. Novos projetos cadastrados em `src/data/projects.ts` recebem suas páginas de entrada automaticamente no próximo build.
+Para habilitar a publicação no repositório:
 
-## Validação
+1. Acesse **Settings → Pages**.
+2. Em **Build and deployment → Source**, selecione **GitHub Actions**.
+3. Envie as alterações para `main` e acompanhe a execução na aba **Actions**.
 
-Build TypeScript/Vite, lint e integridade dos assets locais verificados. A comparação das medidas foi feita com o contexto e as capturas do Figma. A inspeção visual da aplicação no navegador e a interação em dispositivos reais ainda precisam ser realizadas: o ambiente não disponibilizou navegador conectado nem permissão para controlar o Safari.
+Também é possível iniciar uma publicação manualmente em **Actions → Deploy to GitHub Pages → Run workflow**. Não é necessário criar uma branch `gh-pages` ou configurar um token pessoal.
+
+A base de publicação está definida como `/portfolio-mp/` em [`vite.config.ts`](vite.config.ts). Se o endereço do site mudar, ajuste essa configuração. O build gera páginas de entrada para todos os projetos cadastrados e uma página `404.html`, permitindo acessar e recarregar os links dos cases diretamente no GitHub Pages.
+
+## Autoria e contato
+
+**Marcos Paulo — Designer Gráfico**
+
+- [Instagram — mpdesign.studio](https://www.instagram.com/mpdesign.studio/)
+- [E-mail — mpdesign.marcos@gmail.com](mailto:mpdesign.marcos@gmail.com)
+
+## Licença
+
+Este repositório ainda não define uma licença de uso para o código e o conteúdo visual. As fontes distribuídas em `public/fonts/` possuem suas próprias licenças, incluídas nessa pasta.
