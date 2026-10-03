@@ -57,6 +57,21 @@ const pedroLucasImages = [
   tone: 'dark',
 }))
 
+const papelariaDaKaImages = [
+  ['01', new URL('../assets/projects/projeto-02/01.png', import.meta.url).href],
+  ['02', new URL('../assets/projects/projeto-02/02.png', import.meta.url).href],
+  ['03', new URL('../assets/projects/projeto-02/03.png', import.meta.url).href],
+  ['04', new URL('../assets/projects/projeto-02/04.png', import.meta.url).href],
+  ['05', new URL('../assets/projects/projeto-02/05.png', import.meta.url).href],
+  ['07', new URL('../assets/projects/projeto-02/07.png', import.meta.url).href],
+  ['08', new URL('../assets/projects/projeto-02/08.png', import.meta.url).href],
+].map(([number, src]): ProjectImage => ({
+  src,
+  alt: `Papelaria da KA — identidade visual, prancha ${number}.`,
+  caption: `Papelaria da KA · ${number}`,
+  tone: 'paper',
+}))
+
 export const projects: Project[] = [
   {
     slug: 'projeto-01',
@@ -75,7 +90,23 @@ export const projects: Project[] = [
     applications: pedroLucasImages[4],
     mockups: pedroLucasImages.slice(5),
   },
-  { slug: 'projeto-02', title: 'Projeto 02', category: 'Design gráfico · Editorial', cover: image('cover-editorial.png', 'Folhas de papel sobrepostas em composição editorial.', 'Capa substituível', 'paper'), ...template },
+  {
+    slug: 'projeto-02',
+    title: 'Papelaria da KA',
+    category: 'Identidade visual',
+    year: '2025',
+    description: 'A Papelaria da Ka surgiu da necessidade de empreender e do desejo de oferecer produtos personalizados com excelência. Criada por uma profissional que trabalha em escola e percebeu de perto as demandas do dia a dia, a marca nasceu para atender com carinho e compromisso.',
+    cover: {
+      src: new URL('../assets/projects/projeto-02/cover.png', import.meta.url).href,
+      alt: 'Capa do projeto de identidade visual Papelaria da KA.',
+      caption: 'Papelaria da KA · Identidade visual',
+      tone: 'paper',
+    },
+    mainImage: papelariaDaKaImages[0],
+    images: papelariaDaKaImages.slice(1, 4),
+    applications: papelariaDaKaImages[4],
+    mockups: papelariaDaKaImages.slice(5),
+  },
   { slug: 'projeto-03', title: 'Projeto 03', category: 'Campanha', cover: image('cover-campanha.png', 'Pôster laranja com círculo escuro.', 'Capa substituível', 'warm'), ...template },
   { slug: 'projeto-04', title: 'Projeto 04', category: 'Comunicação visual', cover: image('cover-tipografia.png', 'Letras Aa com sublinhado laranja.', 'Capa substituível'), ...template },
   { slug: 'projeto-05', title: 'Projeto 05', category: 'Projeto digital', cover: image('cover-digital.png', 'Composição de interface em tela e celular.', 'Capa substituível', 'paper'), ...template },
